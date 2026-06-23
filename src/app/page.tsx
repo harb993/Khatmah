@@ -76,7 +76,7 @@ export default function HomePage() {
       <main className="main">
         <div className="loading">
           <div className="spinner" />
-          Loading...
+          جاري التحميل...
         </div>
       </main>
     );
@@ -88,10 +88,9 @@ export default function HomePage() {
       <main className="main">
         <div className="hero">
           <span className="hero-icon">📖</span>
-          <h1>Complete the Quran Together</h1>
+          <h1>نختم القرآن معًا</h1>
           <p>
-            Join a group, pick your Juz, and track your weekly Khatma progress.
-            Simple, clean, and collaborative.
+            انضم إلى مجموعة، اختر جزءك، وتابع تقدم ختمتك الأسبوعية. بكل بساطة وتعاون.
           </p>
         </div>
 
@@ -99,7 +98,7 @@ export default function HomePage() {
         {!loading && khatmas.length > 0 && (
           <section>
             <div className="section-header">
-              <h2>Active Khatmas</h2>
+              <h2>الختمات النشطة</h2>
             </div>
             {khatmas.map((khatma) => {
               const progress = getProgress(khatma);
@@ -114,7 +113,7 @@ export default function HomePage() {
                       <div>
                         <div className="khatma-card-title">{khatma.name}</div>
                         <div className="khatma-card-meta">
-                          by {khatma.creatorName} •{" "}
+                          بواسطة {khatma.creatorName} •{" "}
                           {new Date(khatma.createdAt).toLocaleDateString()}
                         </div>
                       </div>
@@ -125,8 +124,8 @@ export default function HomePage() {
                     <div className="progress-container">
                       <div className="progress-header">
                         <span className="progress-label">
-                          {progress.assigned} assigned • {progress.completed}{" "}
-                          completed
+                          {progress.assigned} تم حجزه • {progress.completed}{" "}
+                          مكتمل
                         </span>
                         <span className="progress-value">
                           {Math.round((progress.completed / 30) * 100)}%
@@ -155,26 +154,26 @@ export default function HomePage() {
   return (
     <main className="main">
       <div className="section-header">
-        <h2>Your Khatmas</h2>
+        <h2>ختماتك</h2>
         <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          + New Khatma
+          + ختمة جديدة
         </button>
       </div>
 
       {loading ? (
         <div className="loading">
           <div className="spinner" />
-          Loading khatmas...
+          جاري تحميل الختمات...
         </div>
       ) : khatmas.length === 0 ? (
         <div className="empty-state">
           <span className="empty-state-icon">🕌</span>
-          <p>No khatmas yet. Create one to get started!</p>
+          <p>لا توجد ختمات بعد. أنشئ واحدة للبدء!</p>
           <button
             className="btn btn-primary btn-lg"
             onClick={() => setShowModal(true)}
           >
-            Create Your First Khatma
+            أنشئ ختمتك الأولى
           </button>
         </div>
       ) : (
@@ -191,7 +190,7 @@ export default function HomePage() {
                   <div>
                     <div className="khatma-card-title">{khatma.name}</div>
                     <div className="khatma-card-meta">
-                      by {khatma.creatorName} •{" "}
+                      بواسطة {khatma.creatorName} •{" "}
                       {new Date(khatma.createdAt).toLocaleDateString()}
                     </div>
                   </div>
@@ -202,8 +201,8 @@ export default function HomePage() {
                 <div className="progress-container">
                   <div className="progress-header">
                     <span className="progress-label">
-                      {progress.assigned} assigned • {progress.completed}{" "}
-                      completed
+                      {progress.assigned} تم حجزه • {progress.completed}{" "}
+                      مكتمل
                     </span>
                     <span className="progress-value">
                       {Math.round((progress.completed / 30) * 100)}%
@@ -228,16 +227,16 @@ export default function HomePage() {
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h3>Create New Khatma</h3>
+            <h3>إنشاء ختمة جديدة</h3>
             <div className="form-group">
               <label className="form-label" htmlFor="khatma-name">
-                Khatma Name
+                اسم الختمة
               </label>
               <input
                 id="khatma-name"
                 className="form-input"
                 type="text"
-                placeholder="e.g. Week 23 — June 2026"
+                placeholder="مثال: الأسبوع 23 — يونيو 2026"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleCreate()}
@@ -249,14 +248,14 @@ export default function HomePage() {
                 className="btn btn-secondary"
                 onClick={() => setShowModal(false)}
               >
-                Cancel
+                إلغاء
               </button>
               <button
                 className="btn btn-primary"
                 onClick={handleCreate}
                 disabled={!newName.trim() || creating}
               >
-                {creating ? "Creating..." : "Create"}
+                {creating ? "جاري الإنشاء..." : "إنشاء"}
               </button>
             </div>
           </div>

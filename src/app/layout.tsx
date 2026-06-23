@@ -7,12 +7,13 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import Link from "next/link";
+import { arSA } from "@clerk/localizations";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Khatma — Weekly Quran Completion Tracker",
+  title: "ختمة — متابعة إتمام القرآن الكريم الأسبوعية",
   description:
-    "Track your weekly Quran Khatma with your group. Assign Juz parts, monitor progress, and complete the Quran together.",
+    "تابع ختمتك الأسبوعية مع مجموعتك. اختر الأجزاء، وراقب التقدم، وأتموا القرآن معًا.",
 };
 
 export const viewport: Viewport = {
@@ -28,9 +29,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ar" dir="rtl">
       <body>
         <ClerkProvider
+          localization={arSA}
           appearance={{
             elements: {
               footer: { display: "none" },
@@ -47,15 +49,15 @@ export default function RootLayout({
           <header className="header">
             <Link href="/" className="header-logo">
               <span className="header-logo-icon">📖</span>
-              <span className="header-logo-text">Khatma</span>
+              <span className="header-logo-text">ختمة</span>
             </Link>
             <div className="header-actions">
               <Show when="signed-out">
                 <SignInButton>
-                  <button className="btn btn-ghost">Sign In</button>
+                  <button className="btn btn-ghost">تسجيل الدخول</button>
                 </SignInButton>
                 <SignUpButton>
-                  <button className="btn btn-primary">Sign Up</button>
+                  <button className="btn btn-primary">إنشاء حساب</button>
                 </SignUpButton>
               </Show>
               <Show when="signed-in">

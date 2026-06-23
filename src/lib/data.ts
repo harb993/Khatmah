@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'khatmas.json');
+const DATA_FILE = process.env.VERCEL
+  ? path.join('/tmp', 'khatmas.json')
+  : path.join(process.cwd(), 'data', 'khatmas.json');
 
 export interface Part {
   juz: number;

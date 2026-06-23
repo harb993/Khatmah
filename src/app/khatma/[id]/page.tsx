@@ -102,7 +102,7 @@ export default function KhatmaDetailPage() {
       });
       if (res.ok) {
         await fetchKhatma();
-        showToast(`Juz ${juz} assigned to you`);
+        showToast(`تم حجز الجزء ${juz} لك`);
       } else {
         const data = await res.json();
         showToast(data.error || "Failed to assign");
@@ -125,7 +125,7 @@ export default function KhatmaDetailPage() {
       });
       if (res.ok) {
         await fetchKhatma();
-        showToast(`Juz ${juz} unassigned`);
+        showToast(`تم إلغاء حجز الجزء ${juz}`);
       }
     } catch {
       showToast("Failed to unassign");
@@ -145,7 +145,7 @@ export default function KhatmaDetailPage() {
       });
       if (res.ok) {
         await fetchKhatma();
-        showToast(`Juz ${juz} completed! بارك الله فيك`);
+        showToast(`تم إكمال الجزء ${juz}! بارك الله فيك`);
       }
     } catch {
       showToast("Failed to complete");
@@ -155,7 +155,7 @@ export default function KhatmaDetailPage() {
   }
 
   async function handleDelete() {
-    if (!confirm("Are you sure you want to delete this Khatma?")) return;
+    if (!confirm("هل أنت متأكد أنك تريد حذف هذه الختمة؟")) return;
     try {
       const res = await fetch(`/api/khatmas/${khatmaId}`, {
         method: "DELETE",
@@ -181,7 +181,7 @@ export default function KhatmaDetailPage() {
       if (!part.completed) {
         // Show a simple confirm to complete or unassign
         const action = confirm(
-          `Juz ${part.juz} (${JUZ_NAMES[part.juz]})\n\nClick OK to mark as COMPLETED\nClick Cancel to UNASSIGN`
+          `الجزء ${part.juz} (${JUZ_NAMES[part.juz]})\n\nاضغط موافق لتحديده كمكتمل\nاضغط إلغاء لإلغاء الحجز`
         );
         if (action) {
           handleComplete(part.juz);
@@ -198,7 +198,7 @@ export default function KhatmaDetailPage() {
       <main className="main">
         <div className="loading">
           <div className="spinner" />
-          Loading...
+          جاري التحميل...
         </div>
       </main>
     );
@@ -209,9 +209,9 @@ export default function KhatmaDetailPage() {
       <main className="main">
         <div className="empty-state">
           <span className="empty-state-icon">🔍</span>
-          <p>Khatma not found</p>
+          <p>لم يتم العثور على الختمة</p>
           <Link href="/" className="btn btn-primary">
-            Go Home
+            العودة للرئيسية
           </Link>
         </div>
       </main>
@@ -229,7 +229,7 @@ export default function KhatmaDetailPage() {
   return (
     <main className="main">
       <Link href="/" className="back-link">
-        ← Back to Khatmas
+        ← العودة للختمات
       </Link>
 
       {/* Header */}
@@ -242,7 +242,7 @@ export default function KhatmaDetailPage() {
         {isCreator && (
           <div className="khatma-detail-actions">
             <button className="btn btn-danger btn-sm" onClick={handleDelete}>
-              Delete Khatma
+              حذف الختمة
             </button>
           </div>
         )}
@@ -252,29 +252,29 @@ export default function KhatmaDetailPage() {
       <div className="stats-row">
         <div className="stat-card">
           <div className="stat-value">{completed}</div>
-          <div className="stat-label">Completed</div>
+          <div className="stat-label">مكتمل</div>
         </div>
         <div className="stat-card">
           <div className="stat-value">{assigned - completed}</div>
-          <div className="stat-label">In Progress</div>
+          <div className="stat-label">قيد الإنجاز</div>
         </div>
         <div className="stat-card">
           <div className="stat-value">{available}</div>
-          <div className="stat-label">Available</div>
+          <div className="stat-label">متاح</div>
         </div>
         <div className="stat-card">
           <div className="stat-value">
             {Math.round((completed / 30) * 100)}%
           </div>
-          <div className="stat-label">Total</div>
+          <div className="stat-label">الإجمالي</div>
         </div>
       </div>
 
       {/* Progress */}
       <div className="progress-container">
         <div className="progress-header">
-          <span className="progress-label">Overall Progress</span>
-          <span className="progress-value">{completed}/30 Juz</span>
+          <span className="progress-label">التقدم الإجمالي</span>
+          <span className="progress-value">{completed}/30 جزء</span>
         </div>
         <div className="progress-bar">
           <div
@@ -291,7 +291,7 @@ export default function KhatmaDetailPage() {
           style={{ marginTop: "1.5rem", marginBottom: "0.5rem" }}
         >
           <div style={{ fontWeight: 600, marginBottom: "0.5rem" }}>
-            📋 Your Parts
+            📋 أجزاؤك
           </div>
           <div
             style={{
@@ -313,7 +313,7 @@ export default function KhatmaDetailPage() {
                     : {}
                 }
               >
-                Juz {p.juz} {p.completed ? "✓" : "⏳"}
+                الجزء {p.juz} {p.completed ? "✓" : "⏳"}
               </span>
             ))}
           </div>
@@ -324,19 +324,19 @@ export default function KhatmaDetailPage() {
       <div className="legend">
         <div className="legend-item">
           <div className="legend-dot available" />
-          Available
+          متاح
         </div>
         <div className="legend-item">
           <div className="legend-dot assigned" />
-          Assigned
+          محجوز
         </div>
         <div className="legend-item">
           <div className="legend-dot mine" />
-          Your Part
+          الجزء الخاص بك
         </div>
         <div className="legend-item">
           <div className="legend-dot completed" />
-          Completed
+          مكتمل
         </div>
       </div>
 
@@ -346,20 +346,20 @@ export default function KhatmaDetailPage() {
           const isMine = isSignedIn && part.assignedTo === user?.id;
           let cardClass = "juz-card available";
           let statusClass = "juz-status available";
-          let statusText = "Available";
+          let statusText = "متاح";
 
           if (part.completed) {
             cardClass = "juz-card completed";
             statusClass = "juz-status completed";
-            statusText = "Completed ✓";
+            statusText = "مكتمل ✓";
           } else if (isMine) {
             cardClass = "juz-card assigned-mine";
             statusClass = "juz-status mine";
-            statusText = "Your Part";
+            statusText = "الجزء الخاص بك";
           } else if (part.assignedTo) {
             cardClass = "juz-card assigned";
             statusClass = "juz-status assigned";
-            statusText = "Assigned";
+            statusText = "محجوز";
           }
 
           const isProcessing = actionLoading === part.juz;
@@ -378,18 +378,18 @@ export default function KhatmaDetailPage() {
               }}
               title={
                 !isSignedIn
-                  ? "Sign in to participate"
+                  ? "سجل الدخول للمشاركة"
                   : part.completed
-                    ? `Completed by ${part.assignedName}`
+                    ? `أكمله ${part.assignedName}`
                     : !part.assignedTo
-                      ? "Click to assign to yourself"
+                      ? "انقر لحجزه لنفسك"
                       : isMine
-                        ? "Click to complete or unassign"
-                        : `Assigned to ${part.assignedName}`
+                        ? "انقر للإكمال أو إلغاء الحجز"
+                        : `محجوز لـ ${part.assignedName}`
               }
             >
               <div className="juz-number">{part.juz}</div>
-              <div className="juz-label">Juz</div>
+              <div className="juz-label">الجزء</div>
               <div className="juz-assigned-name">
                 {JUZ_NAMES[part.juz]}
               </div>
